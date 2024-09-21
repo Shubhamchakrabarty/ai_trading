@@ -1,0 +1,29 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include other head elements -->
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+
+<body>
+    <h1>OPS PAGE</h1>
+
+    <button onclick="navigateTo('target_stoploss')">TARGET - STOPLOSS</button>
+    <button onclick="navigateTo('net_pl')">Net P&L</button>
+    <button onclick="navigateTo('../')">Home</button>
+
+
+    <div id="flashcard-container"></div>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+
+</html>

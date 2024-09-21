@@ -1,0 +1,91 @@
+<!-- templates/authorization/auth.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Add your custom styles specific to auth.html here */
+    </style>
+</head>
+
+<body>
+    <h2>Authorization Page</h2>
+
+    <button onclick="runAuthCode()">AUTH CODE</button>
+    <div id="authCodeResult"></div>
+    <button onclick="runAccessToken()">ACCESS TOKEN</button>
+    <div id="accessTokenResult"></div>
+    <button onclick="navigateTo('../')"> GO BACK HOME </button>
+
+    <script>
+        function runAuthCode() {
+            fetch('/run_auth_code')
+                .then(response => response.json())
+                .then(result => {
+                    document.getElementById('authCodeResult').innerHTML = `
+                        <p>Authorization link: <a href="${result.link}" target="_blank">${result.link}</a></p>
+                        <button onclick="copyToClipboard('${result.link}')">Copy Link</button>
+                        <input type="text" id="authCodeInput" placeholder="Enter the AUTH CODE here">
+                    `;
+
+                    // Open the link in a new tab
+                    window.open(result.link, '_blank');
+                })
+                .catch(error => displayFlashcard('Error', error, 'error'));
+        }
+
+        function runAccessToken() {
+            const authCode = document.getElementById('authCodeInput').value;
+            fetch(`/run_access_token?auth_code=${authCode}`)
+                .then(response => response.json())
+                .then(result => {
+                    displayFlashcard('Success', result.message, 'success');
+                })
+                .catch(error => displayFlashcard('Error', error, 'error'));
+        }
+
+        function copyToClipboard(text) {
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            displayFlashcard('Copied', 'Link copied to clipboard!', 'success');
+        }
+
+        function displayFlashcard(header, body, type) {
+            const flashcardContainer = document.getElementById('accessTokenResult');
+            const flashcard = document.createElement('div');
+            flashcard.classList.add('flashcard', type);
+
+            const headerDiv = document.createElement('div');
+            headerDiv.classList.add('flashcard-header');
+            headerDiv.textContent = header;
+
+            const bodyDiv = document.createElement('div');
+            bodyDiv.classList.add('flashcard-body');
+            bodyDiv.textContent = body;
+
+            flashcard.appendChild(headerDiv);
+            flashcard.appendChild(bodyDiv);
+            flashcardContainer.appendChild(flashcard);
+
+            // Remove the flashcard after a few seconds (adjust the timeout as needed)
+            setTimeout(() => {
+                flashcardContainer.removeChild(flashcard);
+            }, 5000);
+        }
+    </script>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+
+</html>

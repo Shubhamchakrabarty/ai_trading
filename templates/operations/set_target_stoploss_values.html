@@ -1,0 +1,122 @@
+<!-- templates/operations/set_target_stoploss_values.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include other head elements -->
+    <link rel="stylesheet" href="../static/styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .centered-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #currentTarget {
+            color: green;
+            font-weight: bold;
+        }
+
+        #currentStoploss {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Set Target Stoploss VALUES (in %)</h1>
+
+    <div class="centered-form">
+        <!-- Your form elements go here -->
+        <form action="/submit_target_stoploss_values" method="post">
+            <label for="target">Target:</label>
+            <input required type="text" id="target" name="target" placeholder="Enter Target % here..."
+                value="{{ current_target }}">
+
+            <label for="stoploss">Stoploss:</label>
+            <input required type="text" id="stoploss" name="stoploss" placeholder="ENter Stoploss % here..."
+                value="{{ current_stoploss }}">
+
+            <button onclick="submitForm()">Submit</button>
+        </form>
+
+        <!-- Display the saved values or messages here -->
+        <p>Current Target: <span id="currentTarget">{{ current_target }}</span></p>
+        <p>Current Stoploss: <span id="currentStoploss">{{ current_stoploss }}</span></p>
+    </div>
+
+    <button onclick="navigateTo('../')">Home</button>
+    <button onclick="navigateTo('/operations/target_stoploss')">Back</button>
+
+    <div id="flashcard-container"></div>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+
+        function submitForm() {
+            // Your form submission logic goes here
+            // Update the currentTarget and currentStoploss values accordingly
+            document.getElementById('currentTarget').innerText = document.getElementById('target').value;
+            document.getElementById('currentStoploss').innerText = document.getElementById('stoploss').value;
+        }
+    </script>
+</body>
+
+</html>

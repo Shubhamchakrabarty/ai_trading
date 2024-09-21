@@ -1,0 +1,47 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include other head elements -->
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <h1>WELCOME HOME</h1>
+    <h3>Simple Semi Auto Order Management With FYERS API by Shubham Chakrabarty</h3>
+
+    <button onclick="runTest()">TEST</button>
+    <button onclick="navigateTo('authorization/auth')">Authorization</button>
+    <button onclick="navigateTo('operations/ops')">Operations</button>
+
+    <div id="flashcard-container"></div>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+
+    <script>
+        function runTest() {
+            fetch('/run_test')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Hi ' + data.name + ', The Test is Successful!');
+                    } else {
+                        alert('Sorry, The Test FAILED!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+</body>
+
+</html>

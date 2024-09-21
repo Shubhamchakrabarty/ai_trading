@@ -1,0 +1,133 @@
+<!-- templates/target_stoploss.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include other head elements -->
+    <link rel="stylesheet" href="../static/styles.css">
+    <style>
+        /* Add some styling for the "Fire" button and value display */
+        #fire-button-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #fire-button {
+            padding: 15px 30px;
+            font-size: 35px;
+            font-weight: bold;
+            /* background-color: #FF6347; */
+            background-color: #000000;
+            /* Tomato color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #current-values {
+            display: flex;
+        }
+
+        .value {
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+
+        .green {
+            background-color: #00FF00;
+            /* Bright green color */
+            color: #000;
+        }
+
+        .red {
+            background-color: #FF0000;
+            /* Bright red color */
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Target - Stoploss</h1>
+
+    <div id="fire-button-container">
+
+        <div class="value green">+{{ current_target }}%</div>
+        <div id="fire-button" onclick="fireTargetStoploss()">FIRE!</div>
+        <div class="value red">-{{ current_stoploss }}%</div>
+
+
+    </div>
+
+
+
+
+    <button onclick="navigateTo('set_target_stoploss_values')">Change % Values</button>
+    <button onclick="navigateTo('ops')">Back</button>
+    <button onclick="navigateTo('../')">Home</button>
+    <button style="background-color: #FF0000;" onclick="exit_all_positions()">EXIT ALL POSITIONS</button>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+
+    <script>
+        function fireTargetStoploss() {
+            // Vibrate for a short duration
+            navigator.vibrate([1000]);
+
+            // Change the background color with a transition effect
+            document.body.style.transition = 'background-color 1s ease';
+            document.body.style.backgroundColor = getRandomColor();
+
+            // Play a bullet firing sound (replace 'bullet_sound.mp3' with your sound file)
+            const audio = new Audio('../static/sounds/success_sound_effect.mp3');
+            audio.play();
+
+            // Make a simple request to trigger the server-side script
+            fetch('/run_fire_target_stoploss')
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            // Reset background color after a delay (e.g., 2 seconds)
+            setTimeout(() => {
+                document.body.style.backgroundColor = ''; // Reset to default
+            }, 2000);
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+    <script>
+        function exit_all_positions() {
+            // Vibrate for a short duration
+            navigator.vibrate([1000]);
+
+             // Make a simple request to trigger the server-side script
+             fetch('/run_exit_all_positions')
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!-- templates/test/test.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include other head elements -->
+    <link rel="stylesheet" href="../static/styles.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid green;
+        }
+
+        th {
+            background-color: green;
+            color: white;
+        }
+
+        .error {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test Results</h1>
+
+    <table>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>fy_id</td>
+            <td>{{ data.fy_id }}</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>{{ data.name }}</td>
+        </tr>
+        <tr>
+            <td>image</td>
+            <td>{{ data.image }}</td>
+        </tr>
+        <tr>
+            <td>display_name</td>
+            <td>{{ data.display_name }}</td>
+        </tr>
+        <tr>
+            <td>pin_change_date</td>
+            <td>{{ data.pin_change_date }}</td>
+        </tr>
+        <tr>
+            <td>email_id</td>
+            <td>{{ data.email_id }}</td>
+        </tr>
+        <tr>
+            <td>pwd_change_date</td>
+            <td>{{ data.pwd_change_date }}</td>
+        </tr>
+        <tr>
+            <td>PAN</td>
+            <td>{{ data.PAN }}</td>
+        </tr>
+        <tr>
+            <td>mobile_number</td>
+            <td>{{ data.mobile_number }}</td>
+        </tr>
+        <tr>
+            <td>totp</td>
+            <td>{{ data.totp }}</td>
+        </tr>
+        <tr>
+            <td>pwd_to_expire</td>
+            <td>{{ data.pwd_to_expire }}</td>
+        </tr>
+    </table>
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <button onclick="navigateTo('/')">GO BACK TO HOME</button>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+
+</html>
